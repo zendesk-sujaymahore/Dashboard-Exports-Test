@@ -1,0 +1,39 @@
+name: Export Dashboard
+
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  export-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download Dashboard ZIP
+        run: |
+          curl -L -o dashboard.zip "http://localhost:8088/api/v1/dashboard/export/?q=!(12)&token=glJZF8-9QlN4SRpsypdiu" # Replace with your API endpoint
+
+      - name: Unzip Dashboard
+        run: |
+          unzip dashboard.zip -d ./dashboards
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "Sujay Mahore"
+          git config --global user.email "sujay.mahore@zendesk.com"
+
+      - name: Commit and Push Changes
+        run: |
+          git add dashboards/*
+          git commit -m "Update dashboards"
+          git push origin HEAD:feature/dashboard-update # Push to a new branch
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Update dashboards"
+          body: "Automated update of dashboards"
+          head: feature/dashboard-update
+          base: master
