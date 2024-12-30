@@ -6,11 +6,18 @@ on:
 env:
   SUPERSET_USERNAME: admin
   SUPERSET_PASSWORD: admin
-  DBS_PASSWORDS: {"ClickHouse Connect (Superset)": "4LJRJj8RSimRzM62"}
+  DBS_PASSWORDS: {"your db" : "your password"}
 
 jobs:
-  uses: actions/import-superset-dashboard-action@v1
-  with:
-    url_base: http://localhost:8088
-    dashboard_file_path: Dashboards/dashboard_test.zip
-    overwrite: true
+  import-dashboard: 
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  
+      - name: Import Superset Dashboard
+        uses: GuyAttia/import-superset-dashboard-action@v1.1.1 
+        with:
+          url_base: http://localhost:8088
+          dashboard_file_path: Dashboards/dashboard_test.zip  
+          overwrite: true
