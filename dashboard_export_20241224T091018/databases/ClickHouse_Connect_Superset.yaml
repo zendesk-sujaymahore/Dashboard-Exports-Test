@@ -1,0 +1,14 @@
+database_name: ClickHouse Connect (Superset)
+sqlalchemy_uri: clickhousedb+connect://looker:XXXXXXXXXX@pod998-clickhouse-wfm-storage-f8d1fa26a041bc27.elb.us-west-2.amazonaws.com:8123/zra
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: false
+allow_cvas: false
+allow_dml: false
+allow_file_upload: false
+extra:
+  allows_virtual_table_explore: true
+impersonate_user: false
+uuid: 92f3aa3c-8b2b-4eb4-935d-492f44285467
+version: 1.0.0

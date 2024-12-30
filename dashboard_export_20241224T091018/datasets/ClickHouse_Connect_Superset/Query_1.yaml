@@ -1,0 +1,88 @@
+table_name: Query_1
+main_dttm_col: null
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+catalog: null
+schema: null
+sql: "   SELECT\n                account_id,\n                queue_id,\n        \
+  \        channel,\n                argMax(value, timestamp) as queue_size_per_channel\n\
+  \              FROM (\n                SELECT\n                  account_id,\n \
+  \                 queue_id,\n                  timestamp,\n                  arrayJoin(mapKeys(queue_size))\
+  \ AS channel,\n                  arrayJoin(mapValues(queue_size)) AS value\n   \
+  \             FROM (\n                  SELECT\n                    account_id,\n\
+  \                    queue_id,\n                    timestamp,\n               \
+  \     if(mapExists((k, v) -> notEmpty(k), queue_size), queue_size, map('messaging',\
+  \ 0, 'support', 0, 'talk', 0)) AS queue_size\n                  FROM queue_update_events\n\
+  \                )\n              )\n              group by account_id, queue_id,\
+  \ channel\n              order by account_id, queue_id"
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+uuid: a51dec9e-985c-4893-b3aa-d9f7198ad029
+metrics:
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra: null
+  warning_text: null
+columns:
+- column_name: queue_size_per_channel
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: UInt16
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: account_id
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: UInt64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: queue_id
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: String
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: channel
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: String
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+version: 1.0.0
+database_uuid: 92f3aa3c-8b2b-4eb4-935d-492f44285467
