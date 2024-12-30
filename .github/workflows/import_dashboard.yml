@@ -6,7 +6,7 @@ on:
 env:
   SUPERSET_USERNAME: admin
   SUPERSET_PASSWORD: admin
-  DBS_PASSWORDS: {"ClickHouse Connect (Superset)": "4LJRJj8RSimRzM62"}
+  DBS_PASSWORDS: '{"ClickHouse Connect (Superset)": "4LJRJj8RSimRzM62"}'
 
 jobs:
   import-dashboard: 
