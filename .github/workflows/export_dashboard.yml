@@ -2,10 +2,11 @@ name: Export Dashboard
 
 on:
   workflow_dispatch: 
-    inputs:
+     inputs:
       dashboard_id:
         description: 'ID of the dashboard to export'
         required: true
+        
 
 jobs:
   export-dashboard:
@@ -15,15 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set dashboard_id as integer
-        id: set-dashboard-id
-        run: |
-          echo "DASHBOARD_ID=${{ github.event.inputs.dashboard_id }}" >> $GITHUB_ENV
-          echo "DASHBOARD_ID_INT=$((DASHBOARD_ID))" >> $GITHUB_ENV
-
       - name: Download Dashboard ZIP
         run: |
-          curl -L -o dashboard.zip "http://localhost:8088/api/v1/dashboard/export/?q=[${{ env.DASHBOARD_ID_INT }}]"
+          curl -L -o dashboard.zip "http://localhost:8088/api/v1/dashboard/export/?q=[12]" 
 
       - name: Set up Git
         run: |
